@@ -1,0 +1,47 @@
+#!/bin/bash
+
+### color code ###
+BLACK="30m"
+RED="31m"
+GREEN="32m"
+YELLOW="33m"
+BLUE="34m"
+MAGENTA="35m"
+CYAN="36m"
+WHITE="37m"
+
+LIGHT_BLACK="1;30m"
+LIGHT_RED="1;31m"
+LIGHT_GREEN="1;32m"
+LIGHT_YELLOW="1;33m"
+LIGHT_BLUE="1;34m"
+LIGHT_MAGENTA="1;35m"
+LIGHT_CYAN="1;36m"
+LIGHT_WHITE="1;37m"
+
+###
+colored(){
+  echo -e "\033[${1}${@:2}\033[0m" 1>& 2
+}
+
+### main ###
+
+echo
+colored ${CYAN} "Execute behind the TOR..."
+
+#Check for ``net-tools``` package
+if ! command -v proxychains4 > /dev/null; then
+echo
+echo
+colored ${LIGHT_RED} "!!! Please install ``proxychains4``"
+echo
+echo
+exit
+fi
+
+# exec
+colored ${LIGHT_BLACK} ">>> proxychains4 -q $*"
+echo
+proxychains4 -q $*
+echo
+echo
